@@ -1,0 +1,26 @@
+{
+  "include": [
+    "src"
+  ],
+  "exclude": ["./public", "node_modules"],
+  "compilerOptions": {
+    "outDir": "./dist/",
+    "baseUrl": "./",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "allowJs": true,
+    "jsx": "react",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict":true,
+    "module": "commonjs",
+    "target": "es5",
+    "sourceMap": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "resolveJsonModule": true,   
+  }
+}
