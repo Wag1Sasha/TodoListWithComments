@@ -75,8 +75,10 @@
   },
   "dependencies": {
     "@babel/polyfill": "^7.8.7",
+    "material-design-icons": "^3.0.1",
     "normalize.css": "^8.0.1",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "react-dom": "^16.13.1",
+    "uniqid": "^5.2.0"
   }
 }
