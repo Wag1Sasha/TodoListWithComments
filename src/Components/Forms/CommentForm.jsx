@@ -11,7 +11,7 @@ export const CommentForm = ({ currentTodoID, updateState }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    if (comment.trim() === '') return
+    if (comment.trim().length < 3) return
     updateState('ADD', { comment: createComment(comment, currentTodoID) })
     setComment('')
   }

@@ -1,8 +1,8 @@
-/* @import "~material-design-icons/iconfont/material-icons.css"; */
+/* @import '~material-design-icons/iconfont/material-icons.css'; */
 
 .todo {
   display: flex;
-  color: rgba(0, 0, 0, 0.603);
+  color: black;
   font-size: 25px;
   font-weight: 500;
   font-style: oblique;
@@ -12,10 +12,34 @@
   align-items: center;
   justify-content: space-between;
   padding: 10px;
-  border: 1px solid black;
   border-radius: 10px;
-  background: grey;
-  margin: 2vh auto;
+  background: gray;
+  cursor: pointer;
+  margin: 1vh auto;
+}
+.selected {
+  display: flex;
+  color: black;
+  font-size: 25px;
+  font-weight: 500;
+  font-style: oblique;
+  width: 350px;
+  margin: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+  border-radius: 10px;
+  background: gray;
+  cursor: pointer;
+  margin: 1vh auto;
+  transition: 0.3s ease-in;
+}
+
+.titleTodo {
+  width: 80%;
+  height: 100%;
+  text-align: center;
 }
 
 .deleteTodo {

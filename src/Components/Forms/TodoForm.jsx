@@ -15,7 +15,7 @@ export const TodoForm = ({ updateState }) =>{
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (value.trim() === "") return;
+    if (value.trim().length < 3) return;
     updateState("ADD", {todo:createTodo(value)});
     setValue("");
   };

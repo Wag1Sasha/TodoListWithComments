@@ -1,5 +1,3 @@
-/* eslint-disable default-case */
-/* eslint-disable no-fallthrough */
 import React, { useState, useEffect } from 'react'
 import ReactDOM from 'react-dom'
 import { TodoList } from './Components/Todolist/Todolist'
@@ -9,61 +7,75 @@ import { CommentForm } from './Components/Forms/CommentForm'
 
 import './App.css'
 
+const initState = {
+  todos: [],
+  comments: [],
+  currentID: -1,
+}
+
 const App = () => {
-  const [todos, setTodos] = useState([])
-  const [comments, setComments] = useState([])
-  const [currentID, setCurrentId] = useState('')
+  const [state, setState] = useState(initState)
 
   useEffect(() => {
     const t = JSON.parse(window.localStorage.getItem('todos'))
-    if (t) setTodos(t)
+    if (t) setState((state) => ({ ...state, todos: t }))
     const c = JSON.parse(window.localStorage.getItem('comments'))
-    if (c) setComments(c)
+    if (c) setState((state) => ({ ...state, comments: c }))
     const i = window.localStorage.getItem('currentID')
-    if (i) setCurrentId(i)
+    if (i) setState((state) => ({ ...state, currentID: i }))
   }, [])
 
-  const updateStateComments = (action, { comment }) => {
+  const updateStateComments = (action, { id, comment }) => {
     switch (action) {
       case 'ADD': {
-        const commentsChange = [...comments, comment]
-        console.log(commentsChange)
+        const commentsChange = [...state.comments, comment]
         window.localStorage.setItem('comments', JSON.stringify(commentsChange))
-        setComments(commentsChange)
-        console.log(comments)
+        setState((state) => ({ ...state, comments: commentsChange }))
+        break
+      }
+      case 'DELETE': {
+        const commentsChange = state.comments.filter((comment) => comment.id !== id)
+        window.localStorage.setItem('comments', JSON.stringify(commentsChange))
+        setState((state) => ({ ...state, comments: commentsChange }))
+        break
+      }
+      default: {
         break
       }
     }
   }
 
-  const updateStateTodos = (action, { id, todo }) => {
+  const updateStateTodos = (action, { id, todo, event }) => {
     switch (action) {
       case 'ADD': {
-        const todosChange = [...todos, todo]
+        const todosChange = [...state.todos, todo]
         window.localStorage.setItem('todos', JSON.stringify(todosChange))
-        setTodos(todosChange)
+        setState((state) => ({ ...state, todos: todosChange }))
         break
       }
       case 'DELETE': {
         window.localStorage.setItem('currentID', '')
-        const todosChange = todos.filter((todo) => id !== todo.id)
-        const commentsChange = comments.filter((comment) => comment.todoID !== id)
+        const todosChange = state.todos.filter((todo) => id !== todo.id)
+        const commentsChange = state.comments.filter((comment) => comment.todoID !== id)
         window.localStorage.setItem('comments', JSON.stringify(commentsChange))
         window.localStorage.setItem('todos', JSON.stringify(todosChange))
-        setTodos(todosChange)
-        setComments(commentsChange)
-        setCurrentId('')
+        setState((state) => ({
+          ...state,
+          todos: todosChange,
+          comments: commentsChange,
+          currentID: '',
+        }))
         break
       }
       case 'MARK': {
-        const todosChange = todos.map((todo) => (id === todo.id ? { ...todo, completed: !todo.completed } : todo))
+        const todosChange = state.todos.map((todo) => (id === todo.id ? { ...todo, completed: !todo.completed } : todo))
         window.localStorage.setItem('todos', JSON.stringify(todosChange))
-        setTodos(todosChange)
+        setState((state) => ({ ...state, todos: todosChange }))
         break
       }
       case 'SELECT': {
         window.localStorage.setItem('currentID', id)
-        setCurrentId(id)
+        setState((state) => ({ ...state, currentID: id }))
         break
       }
       default: {
@@ -76,13 +88,12 @@ const App = () => {
     <div id='app'>
       <div className='container'>
         <TodoForm updateState={updateStateTodos} />
-        <TodoList todos={todos} updateState={updateStateTodos} />
+        <TodoList todos={state.todos} updateState={updateStateTodos} currentID={state.currentID} />
       </div>
       <div className='container'>
-        <CommentForm currentTodoID={currentID} updateState={updateStateComments} />
+        <CommentForm currentTodoID={state.currentID} updateState={updateStateComments} />
         <CommentList
-          todoId={currentID}
-          comments={comments.filter((comment) => comment.todoID === currentID)}
+          comments={state.comments.filter((comment) => comment.todoID === state.currentID)}
           updateState={updateStateComments}
         />
       </div>

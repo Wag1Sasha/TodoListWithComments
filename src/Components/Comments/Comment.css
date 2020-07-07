@@ -1,16 +1,17 @@
 .comment {
   display: flex;
-  color: rgba(0, 0, 0, 0.603);
+  color: black;
   font-size: 25px;
   font-weight: 500;
   font-style: oblique;
   width: 350px;
   margin: 10px;
   display: flex;
-  justify-content: center;
+  align-items: center;
   padding: 10px;
-  border: 1px solid black;
   border-radius: 10px;
-  background: grey;
-  margin: 2vh auto;
+  background: gray;
+  cursor: pointer;
+  margin: 1vh auto;
+  justify-content: space-around;
 }
